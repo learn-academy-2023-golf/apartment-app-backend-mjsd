@@ -10,17 +10,17 @@ RSpec.describe "Apartments", type: :request do
       describe "GET /index" do
         it 'gets a list of apartments' do 
             apartment = user.apartments.create(
-            street: "Auto Mall Parkway",
-            unit: "113",
-            city: "D'Iberville",
-            state: "MS",
-            square_footage: 1200,
-            price: "1300",
-            bedrooms: 2,
-            bathrooms: 2,
-            pets: "cats and dogs",
-            image: "https://media.apts247.info/ce/ce9560e9239c4c3b8369663b0a699279/floorplans/1196_CoconutPalm_504586.jpg"
-          )
+                street: "Auto Mall Parkway",
+                unit: "113",
+                city: "D'Iberville",
+                state: "MS",
+                square_footage: 1200,
+                price: "1300",
+                bedrooms: 2,
+                bathrooms: 2,
+                pets: "cats and dogs",
+                image: "https://media.apts247.info/ce/ce9560e9239c4c3b8369663b0a699279/floorplans/1196_CoconutPalm_504586.jpg"
+            )
     
           get '/apartments'
     
@@ -33,20 +33,20 @@ RSpec.describe "Apartments", type: :request do
      describe "POST /create" do 
         it 'should create apartment' do
             apartment_params = {
-            apartment: {
-            street: "Auto Mall Parkway",  
-            unit: "113",
-            city: "D'Iberville",
-            state: "MS",
-            square_footage: 1200,
-            price: "1300",
-            bedrooms: 2,
-            bathrooms: 2,
-            pets: "cats and dogs",
-            image: "https://media.apts247.info/ce/ce9560e9239c4c3b8369663b0a699279/floorplans/1196_CoconutPalm_504586.jpg",
-            user_id: user.id
-        }
-    }
+                apartment: {
+                    street: "Auto Mall Parkway",  
+                    unit: "113",
+                    city: "D'Iberville",
+                    state: "MS",
+                    square_footage: 1200,
+                    price: "1300",
+                    bedrooms: 2,
+                    bathrooms: 2,
+                    pets: "cats and dogs",
+                    image: "https://media.apts247.info/ce/ce9560e9239c4c3b8369663b0a699279/floorplans/1196_CoconutPalm_504586.jpg",
+                    user_id: user.id
+                }
+            }
 
             post '/apartments', params: apartment_params
             expect(response).to have_http_status(200)
@@ -67,24 +67,221 @@ RSpec.describe "Apartments", type: :request do
 
         it "cannot create an apartment" do 
             apartment_params = {
-            apartment: {
-            unit: "113",
-            city: "D'Iberville",
-            state: "MS",
-            square_footage: 1200,
-            price: "1300",
-            bedrooms: 2,
-            bathrooms: 2,
-            pets: "cats and dogs",
-            image: "https://media.apts247.info/ce/ce9560e9239c4c3b8369663b0a699279/floorplans/1196_CoconutPalm_504586.jpg",
-            user_id: user.id
-          }
-    }
-    
+                apartment: {
+                    unit: "113",
+                    city: "D'Iberville",
+                    state: "MS",
+                    square_footage: 1200,
+                    price: "1300",
+                    bedrooms: 2,
+                    bathrooms: 2,
+                    pets: "cats and dogs",
+                    image: "https://media.apts247.info/ce/ce9560e9239c4c3b8369663b0a699279/floorplans/1196_CoconutPalm_504586.jpg",
+                    user_id: user.id
+                }
+            }
+
             post '/apartments', params: apartment_params
             apartment = JSON.parse(response.body)
             expect(response).to have_http_status(422)
             expect(apartment['street']).to include "can't be blank"
+        end
+        it "cannot create an apartment" do 
+            apartment_params = {
+                apartment: {
+                    street: "Auto Mall Parkway", 
+                    city: "D'Iberville",
+                    state: "MS",
+                    square_footage: 1200,
+                    price: "1300",
+                    bedrooms: 2,
+                    bathrooms: 2,
+                    pets: "cats and dogs",
+                    image: "https://media.apts247.info/ce/ce9560e9239c4c3b8369663b0a699279/floorplans/1196_CoconutPalm_504586.jpg",
+                    user_id: user.id
+                }
+            }
+    
+            post '/apartments', params: apartment_params
+            apartment = JSON.parse(response.body)
+            expect(response).to have_http_status(422)
+            expect(apartment['unit']).to include "can't be blank"
+        end
+
+        it "cannot create an apartment" do 
+            apartment_params = {
+                apartment: {
+                    street: "Auto Mall Parkway", 
+                    unit: "113",
+                    state: "MS",
+                    square_footage: 1200,
+                    price: "1300",
+                    bedrooms: 2,
+                    bathrooms: 2,
+                    pets: "cats and dogs",
+                    image: "https://media.apts247.info/ce/ce9560e9239c4c3b8369663b0a699279/floorplans/1196_CoconutPalm_504586.jpg",
+                    user_id: user.id
+                }
+            }
+    
+            post '/apartments', params: apartment_params
+            apartment = JSON.parse(response.body)
+            expect(response).to have_http_status(422)
+            expect(apartment['city']).to include "can't be blank"
+        end
+
+        it "cannot create an apartment" do 
+            apartment_params = {
+                apartment: {
+                    street: "Auto Mall Parkway", 
+                    unit: "113",
+                    city: "D'Iberville",
+                    square_footage: 1200,
+                    price: "1300",
+                    bedrooms: 2,
+                    bathrooms: 2,
+                    pets: "cats and dogs",
+                    image: "https://media.apts247.info/ce/ce9560e9239c4c3b8369663b0a699279/floorplans/1196_CoconutPalm_504586.jpg",
+                    user_id: user.id
+                }
+            }
+        
+            post '/apartments', params: apartment_params
+            apartment = JSON.parse(response.body)
+            expect(response).to have_http_status(422)
+            expect(apartment['state']).to include "can't be blank"
+        end
+
+        it "cannot create an apartment" do 
+            apartment_params = {
+                apartment: {
+                    street: "Auto Mall Parkway", 
+                    unit: "113",
+                    city: "D'Iberville",
+                    state: "MS",
+                    price: "1300",
+                    bedrooms: 2,
+                    bathrooms: 2,
+                    pets: "cats and dogs",
+                    image: "https://media.apts247.info/ce/ce9560e9239c4c3b8369663b0a699279/floorplans/1196_CoconutPalm_504586.jpg",
+                    user_id: user.id
+                }
+            }
+    
+            post '/apartments', params: apartment_params
+            apartment = JSON.parse(response.body)
+            expect(response).to have_http_status(422)
+            expect(apartment['square_footage']).to include "can't be blank"
+        end
+
+        it "cannot create an apartment" do 
+            apartment_params = {
+                apartment: {
+                    street: "Auto Mall Parkway", 
+                    unit: "113",
+                    city: "D'Iberville",
+                    state: "MS",
+                    square_footage: 1200,
+                    bedrooms: 2,
+                    bathrooms: 2,
+                    pets: "cats and dogs",
+                    image: "https://media.apts247.info/ce/ce9560e9239c4c3b8369663b0a699279/floorplans/1196_CoconutPalm_504586.jpg",
+                    user_id: user.id
+                }
+            }
+    
+            post '/apartments', params: apartment_params
+            apartment = JSON.parse(response.body)
+            expect(response).to have_http_status(422)
+            expect(apartment['price']).to include "can't be blank"
+        end
+
+        it "cannot create an apartment" do 
+            apartment_params = {
+                apartment: {
+                    street: "Auto Mall Parkway", 
+                    unit: "113",
+                    city: "D'Iberville",
+                    state: "MS",
+                    square_footage: 1200,
+                    price: "1300",
+                    bathrooms: 2,
+                    pets: "cats and dogs",
+                    image: "https://media.apts247.info/ce/ce9560e9239c4c3b8369663b0a699279/floorplans/1196_CoconutPalm_504586.jpg",
+                    user_id: user.id
+                }
+            }
+    
+            post '/apartments', params: apartment_params
+            apartment = JSON.parse(response.body)
+            expect(response).to have_http_status(422)
+            expect(apartment['bedrooms']).to include "can't be blank"
+        end
+
+        it "cannot create an apartment" do 
+            apartment_params = {
+                apartment: {
+                    street: "Auto Mall Parkway", 
+                    unit: "113",
+                    city: "D'Iberville",
+                    state: "MS",
+                    square_footage: 1200,
+                    price: "1300",
+                    bedrooms: 2,
+                    pets: "cats and dogs",
+                    image: "https://media.apts247.info/ce/ce9560e9239c4c3b8369663b0a699279/floorplans/1196_CoconutPalm_504586.jpg",
+                    user_id: user.id
+                }
+            }
+        
+            post '/apartments', params: apartment_params
+            apartment = JSON.parse(response.body)
+            expect(response).to have_http_status(422)
+            expect(apartment['bathrooms']).to include "can't be blank"
+        end
+
+        it "cannot create an apartment" do 
+            apartment_params = {
+                apartment: {
+                    street: "Auto Mall Parkway", 
+                    unit: "113",
+                    city: "D'Iberville",
+                    state: "MS",
+                    square_footage: 1200,
+                    price: "1300",
+                    bedrooms: 2,
+                    bathrooms: 2,
+                    image: "https://media.apts247.info/ce/ce9560e9239c4c3b8369663b0a699279/floorplans/1196_CoconutPalm_504586.jpg",
+                    user_id: user.id
+                }
+            }
+    
+            post '/apartments', params: apartment_params
+            apartment = JSON.parse(response.body)
+            expect(response).to have_http_status(422)
+            expect(apartment['pets']).to include "can't be blank"
+        end
+
+        it "cannot create an apartment" do 
+            apartment_params = {
+                apartment: {
+                    street: "Auto Mall Parkway", 
+                    unit: "113",
+                    city: "D'Iberville",
+                    state: "MS",
+                    square_footage: 1200,
+                    price: "1300",
+                    bedrooms: 2,
+                    bathrooms: 2,
+                    pets: "cats and dogs",
+                    user_id: user.id
+                }
+            }
+    
+            post '/apartments', params: apartment_params
+            apartment = JSON.parse(response.body)
+            expect(response).to have_http_status(422)
+            expect(apartment['image']).to include "can't be blank"
         end
     end
  end
