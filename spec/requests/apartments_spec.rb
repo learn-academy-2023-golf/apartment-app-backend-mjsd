@@ -65,7 +65,7 @@ RSpec.describe "Apartments", type: :request do
             expect(apartment.image).to eq "https://media.apts247.info/ce/ce9560e9239c4c3b8369663b0a699279/floorplans/1196_CoconutPalm_504586.jpg"
         end
 
-        it "cannot create an apartment" do 
+        it "cannot create an apartment without street" do 
             apartment_params = {
                 apartment: {
                     unit: "113",
@@ -86,7 +86,8 @@ RSpec.describe "Apartments", type: :request do
             expect(response).to have_http_status(422)
             expect(apartment['street']).to include "can't be blank"
         end
-        it "cannot create an apartment" do 
+
+        it "cannot create an apartment without unit" do 
             apartment_params = {
                 apartment: {
                     street: "Auto Mall Parkway", 
@@ -108,7 +109,7 @@ RSpec.describe "Apartments", type: :request do
             expect(apartment['unit']).to include "can't be blank"
         end
 
-        it "cannot create an apartment" do 
+        it "cannot create an apartment without city" do 
             apartment_params = {
                 apartment: {
                     street: "Auto Mall Parkway", 
@@ -130,7 +131,7 @@ RSpec.describe "Apartments", type: :request do
             expect(apartment['city']).to include "can't be blank"
         end
 
-        it "cannot create an apartment" do 
+        it "cannot create an apartment without state" do 
             apartment_params = {
                 apartment: {
                     street: "Auto Mall Parkway", 
@@ -152,7 +153,7 @@ RSpec.describe "Apartments", type: :request do
             expect(apartment['state']).to include "can't be blank"
         end
 
-        it "cannot create an apartment" do 
+        it "cannot create an apartment without square footage" do 
             apartment_params = {
                 apartment: {
                     street: "Auto Mall Parkway", 
@@ -174,7 +175,7 @@ RSpec.describe "Apartments", type: :request do
             expect(apartment['square_footage']).to include "can't be blank"
         end
 
-        it "cannot create an apartment" do 
+        it "cannot create an apartment without price" do 
             apartment_params = {
                 apartment: {
                     street: "Auto Mall Parkway", 
@@ -196,7 +197,7 @@ RSpec.describe "Apartments", type: :request do
             expect(apartment['price']).to include "can't be blank"
         end
 
-        it "cannot create an apartment" do 
+        it "cannot create an apartment without bedrooms" do 
             apartment_params = {
                 apartment: {
                     street: "Auto Mall Parkway", 
@@ -218,7 +219,7 @@ RSpec.describe "Apartments", type: :request do
             expect(apartment['bedrooms']).to include "can't be blank"
         end
 
-        it "cannot create an apartment" do 
+        it "cannot create an apartment without bathrooms" do 
             apartment_params = {
                 apartment: {
                     street: "Auto Mall Parkway", 
@@ -240,7 +241,7 @@ RSpec.describe "Apartments", type: :request do
             expect(apartment['bathrooms']).to include "can't be blank"
         end
 
-        it "cannot create an apartment" do 
+        it "cannot create an apartment without pets" do 
             apartment_params = {
                 apartment: {
                     street: "Auto Mall Parkway", 
@@ -262,7 +263,7 @@ RSpec.describe "Apartments", type: :request do
             expect(apartment['pets']).to include "can't be blank"
         end
 
-        it "cannot create an apartment" do 
+        it "cannot create an apartment without image" do 
             apartment_params = {
                 apartment: {
                     street: "Auto Mall Parkway", 
