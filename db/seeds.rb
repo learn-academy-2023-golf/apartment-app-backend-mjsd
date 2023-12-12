@@ -31,3 +31,13 @@ user2_apartments = [
         image: "https://domaintowncenter.com/assets/images/b2_single1.svg"
     }
 ]
+
+user1_apartments.each do |apartment| 
+    user1.apartments.create(apartment)
+    p "created: #{apartment}"
+  end
+  
+  user2_apartments.each do |apartment| 
+    user2.apartments.create(apartment)
+    p "created: #{apartment}"
+  end
