@@ -379,4 +379,34 @@ RSpec.describe "Apartments", type: :request do
           expect(apartment['unit']).to include "can't be blank"
         end
       end
+
+      describe "DELETE /destroy" do 
+        it "deletes an apartment" do 
+          apartment_params = {
+            apartment: {
+                street: "Auto Mall Parkway",  
+                unit: "113",
+                city: "D'Iberville",
+                state: "MS",
+                square_footage: 1200,
+                price: "1300",
+                bedrooms: 2,
+                bathrooms: 2,
+                pets: "cats and dogs",
+                image: "https://media.apts247.info/ce/ce9560e9239c4c3b8369663b0a699279/floorplans/1196_CoconutPalm_504586.jpg",
+                user_id: user.id
+            }
+          }
+    
+          post '/apartments', params: apartment_params
+    
+          apartment = Apartment.first 
+    
+          delete "/apartments/#{apartment.id}"
+    
+          expect(response).to have_http_status(200)
+          apartments = Apartment.all 
+          expect(apartments).to be_empty
+        end
+      end
  end
