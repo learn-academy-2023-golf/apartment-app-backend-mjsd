@@ -285,4 +285,98 @@ RSpec.describe "Apartments", type: :request do
             expect(apartment['image']).to include "can't be blank"
         end
     end
+
+    describe "PATCH /update" do 
+        it "updates an apartment" do 
+          apartment_params = {
+            apartment: {
+                street: "Auto Mall Parkway",  
+                unit: "113",
+                city: "D'Iberville",
+                state: "MS",
+                square_footage: 1200,
+                price: "1300",
+                bedrooms: 2,
+                bathrooms: 2,
+                pets: "cats and dogs",
+                image: "https://media.apts247.info/ce/ce9560e9239c4c3b8369663b0a699279/floorplans/1196_CoconutPalm_504586.jpg",
+                user_id: user.id
+            }
+          }
+    
+          post '/apartments', params: apartment_params 
+    
+          apartment = Apartment.first 
+    
+          updated_apartment_params = {
+            apartment: {
+                street: "Auto Mall Parkway",  
+                unit: "313",
+                city: "D'Iberville",
+                state: "MS",
+                square_footage: 1200,
+                price: "1300",
+                bedrooms: 2,
+                bathrooms: 2,
+                pets: "no pets allowed",
+                image: "https://media.apts247.info/ce/ce9560e9239c4c3b8369663b0a699279/floorplans/1196_CoconutPalm_504586.jpg",
+                user_id: user.id
+            }
+          }
+    
+          patch "/apartments/#{apartment.id}", params: updated_apartment_params
+    
+          expect(response).to have_http_status(200)
+    
+          updated_apartment = Apartment.find(apartment.id)
+          expect(updated_apartment.unit).to eq "313"
+          expect(updated_apartment.pets).to eq 'no pets allowed'
+        end
+      end
+
+      describe "PATCH /update" do 
+        it "cannot update an apartment without all valid attributes" do 
+          apartment_params = {
+            apartment: {
+                street: "Auto Mall Parkway",  
+                unit: "113",
+                city: "D'Iberville",
+                state: "MS",
+                square_footage: 1200,
+                price: "1300",
+                bedrooms: 2,
+                bathrooms: 2,
+                pets: "cats and dogs",
+                image: "https://media.apts247.info/ce/ce9560e9239c4c3b8369663b0a699279/floorplans/1196_CoconutPalm_504586.jpg",
+                user_id: user.id
+            }
+          }
+    
+          post '/apartments', params: apartment_params 
+    
+          apartment = Apartment.first 
+    
+          updated_apartment_params = {
+            apartment: {
+                street: "Auto Mall Parkway",
+                unit: "",
+                city: "Biloxi",
+                state: "MS",
+                square_footage: 1200,
+                price: "1300",
+                bedrooms: 2,
+                bathrooms: 2,
+                pets: "no pets allowed",
+                image: "https://media.apts247.info/ce/ce9560e9239c4c3b8369663b0a699279/floorplans/1196_CoconutPalm_504586.jpg",
+                user_id: user.id
+            }
+          }
+    
+          patch "/apartments/#{apartment.id}", params: updated_apartment_params
+    
+          expect(response).to have_http_status(422)
+          apartment = JSON.parse(response.body)
+          expect(apartment['unit']).to include "can't be blank"
+        end
+      end
  end
