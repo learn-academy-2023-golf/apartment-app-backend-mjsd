@@ -375,11 +375,8 @@ RSpec.describe "Apartments", type: :request do
           patch "/apartments/#{apartment.id}", params: updated_apartment_params
     
           expect(response).to have_http_status(422)
-    
-          updated_apartment = Apartment.find(apartment.id)
-          expect(apartment['city']).to eq("D'Iberville")
-          expect(apartment['unit']).to eq("113")
-          expect(apartment['pets']).to eq("cats and dogs")
+          apartment = JSON.parse(response.body)
+          expect(apartment['unit']).to include "can't be blank"
         end
       end
  end
