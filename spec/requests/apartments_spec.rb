@@ -333,4 +333,53 @@ RSpec.describe "Apartments", type: :request do
           expect(updated_apartment.pets).to eq 'no pets allowed'
         end
       end
+
+      describe "PATCH /update" do 
+        it "cannot update an apartment without all valid attributes" do 
+          apartment_params = {
+            apartment: {
+                street: "Auto Mall Parkway",  
+                unit: "113",
+                city: "D'Iberville",
+                state: "MS",
+                square_footage: 1200,
+                price: "1300",
+                bedrooms: 2,
+                bathrooms: 2,
+                pets: "cats and dogs",
+                image: "https://media.apts247.info/ce/ce9560e9239c4c3b8369663b0a699279/floorplans/1196_CoconutPalm_504586.jpg",
+                user_id: user.id
+            }
+          }
+    
+          post '/apartments', params: apartment_params 
+    
+          apartment = Apartment.first 
+    
+          updated_apartment_params = {
+            apartment: {
+                street: "Auto Mall Parkway",
+                unit: "",
+                city: "Biloxi",
+                state: "MS",
+                square_footage: 1200,
+                price: "1300",
+                bedrooms: 2,
+                bathrooms: 2,
+                pets: "no pets allowed",
+                image: "https://media.apts247.info/ce/ce9560e9239c4c3b8369663b0a699279/floorplans/1196_CoconutPalm_504586.jpg",
+                user_id: user.id
+            }
+          }
+    
+          patch "/apartments/#{apartment.id}", params: updated_apartment_params
+    
+          expect(response).to have_http_status(422)
+    
+          updated_apartment = Apartment.find(apartment.id)
+          expect(apartment['city']).to eq("D'Iberville")
+          expect(apartment['unit']).to eq("113")
+          expect(apartment['pets']).to eq("cats and dogs")
+        end
+      end
  end
